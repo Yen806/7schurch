@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faNewspaper } from "@fortawesome/free-regular-svg-icons";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from "swiper/modules";
+import Banner from "../component/Banner";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -39,6 +40,7 @@ function Home() {
         setScripture(todayScripture ? todayScripture.scripture : "今日經文尚未設定")
     }, [])
     return (<>
+        <Banner />
         <main className="frontpage">
             <div className="container mx-auto py-15">
                 <div className="flex mx-auto justify-center">
@@ -46,80 +48,90 @@ function Home() {
                     <h2 className="border-l-4 border-primary-500 text-4xl text-primary-500 pl-6">崇拜時間</h2>
                 </div>
             </div>
-            <Swiper
-                modules={[Navigation]}
-                navigation
-                slidesPerView={3.8}
-                spaceBetween={16}
-                height={600}
-                initialSlide={0}
-            >
-                <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                    <img src="images/da-jin.jpg" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
-                    <div className="p-6">
-                        <h3 className="text-2xl font-bold mb-3 text-primary-500">4/6舊寮崇拜</h3>
-                        <div>
-                            <p>時間：(日)9:30-11:00</p>
-                            <p>地點：舊寮教會</p>
-                            <p>講員：阮佳生傳道</p>
+            <div className="mb-10">
+                <Swiper
+                    modules={[Navigation]}
+                    navigation
+                    slidesPerView={3.8}
+                    spaceBetween={16}
+                    height={600}
+                    initialSlide={0}
+                >
+                    <SwiperSlide className="bg-white rounded-2xl shadow-lg">
+                        <img src="images/da-jin.jpg" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
+                        <div className="p-6">
+                            <h3 className="text-2xl font-bold mb-3 text-primary-500">4/6舊寮崇拜</h3>
+                            <div>
+                                <p>時間：(日)9:30-11:00</p>
+                                <p>地點：舊寮教會</p>
+                                <p>講員：阮佳生傳道</p>
+                            </div>
                         </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                    <img src="images/church-2.jpg" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
-                    <div className="p-6">
-                        <h3 className="text-2xl font-bold mb-3 text-primary-500">4/13主日崇拜</h3>
-                        <div>
-                            <p>時間：(日)9:30-11:00</p>
-                            <p>地點：三樓大堂</p>
-                            <p>講員：李偉帆弟兄</p>
-                            <p>領會：陳怡如姊妹</p>
-                            <p>司琴：李恩柔姊妹</p>
+                    </SwiperSlide>
+                    <SwiperSlide className="bg-white rounded-2xl shadow-lg">
+                        <img src="images/church-2.jpg" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
+                        <div className="p-6">
+                            <h3 className="text-2xl font-bold mb-3 text-primary-500">4/13主日崇拜</h3>
+                            <div>
+                                <p>時間：(日)9:30-11:00</p>
+                                <p>地點：三樓大堂</p>
+                                <p>講員：李偉帆弟兄</p>
+                                <p>領會：陳怡如姊妹</p>
+                                <p>司琴：李恩柔姊妹</p>
+                            </div>
                         </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1485808269728-77bb07c059a8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
-                    <div className="p-6">
-                        <h3 className="text-2xl font-bold mb-3 text-primary-500">4/13台語崇拜</h3>
-                        <div>
-                            <p>時間：(日)9:30-11:00</p>
-                            <p>地點：台語堂</p>
-                            <p>講員：蘇慈玲姊妹</p>
+                    </SwiperSlide>
+                    <SwiperSlide className="bg-white rounded-2xl shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1485808269728-77bb07c059a8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
+                        <div className="p-6">
+                            <h3 className="text-2xl font-bold mb-3 text-primary-500">4/13台語崇拜</h3>
+                            <div>
+                                <p>時間：(日)9:30-11:00</p>
+                                <p>地點：台語堂</p>
+                                <p>講員：蘇慈玲姊妹</p>
+                            </div>
                         </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                    <img src="https://plus.unsplash.com/premium_photo-1661377118520-287ec60a32f3?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
-                    <div className="p-6">
-                        <h3 className="text-2xl font-bold mb-3 text-primary-500">4/5學青崇拜</h3>
-                        <div>
-                            <p>時間：(六)16:00-17:30</p>
-                            <p>地點：六樓學青教室</p>
-                            <p>講員：洪珩潔姊妹</p>
-                            <p>領會：徐永欣姊妹</p>
+                    </SwiperSlide>
+                    <SwiperSlide className="bg-white rounded-2xl shadow-lg">
+                        <img src="https://plus.unsplash.com/premium_photo-1661377118520-287ec60a32f3?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
+                        <div className="p-6">
+                            <h3 className="text-2xl font-bold mb-3 text-primary-500">4/5學青崇拜</h3>
+                            <div>
+                                <p>時間：(六)16:00-17:30</p>
+                                <p>地點：六樓學青教室</p>
+                                <p>講員：洪珩潔姊妹</p>
+                                <p>領會：徐永欣姊妹</p>
+                            </div>
                         </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                    <img src="images/da-jin.jpg" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
-                    <div className="p-6">
-                        <h3 className="text-2xl font-bold mb-3 text-primary-500">兒童主日學</h3>
-                        <div>
-                            <p>時間：(日)9:30-12:00</p>
-                            <p>地點：一樓副堂</p>
-                            <p>幼稚班同工：劉忠萱、陳道欣、洪珩潔、鄭嵩穎</p>
-                            <p>國小班同工：張雅晴、李偉帆、黃茄玉、陳寶惠、林依茹、江丕華、陳道維</p>
+                    </SwiperSlide>
+                    <SwiperSlide className="bg-white rounded-2xl shadow-lg">
+                        <img src="images/da-jin.jpg" alt="" className="rounded-t-2xl h-[200px] w-full object-cover" />
+                        <div className="p-6">
+                            <h3 className="text-2xl font-bold mb-3 text-primary-500">兒童主日學</h3>
+                            <div>
+                                <p>時間：(日)9:30-12:00</p>
+                                <p>地點：一樓副堂</p>
+                                <p>幼稚班同工：劉忠萱、陳道欣、洪珩潔、鄭嵩穎</p>
+                                <p>國小班同工：張雅晴、李偉帆、黃茄玉、陳寶惠、林依茹、江丕華、陳道維</p>
+                            </div>
                         </div>
-                    </div>
-                </SwiperSlide>
-            </Swiper>
+                    </SwiperSlide>
+                </Swiper>
+            </div>
         </main>
-        <div className="container mx-auto py-15">
+        {/* <div className="container mx-auto py-15">
             <h2 className="text-4xl text-primary-500 font-bold mb-6">本日靈修經文</h2>
             <p className="text-2xl text-primary-400 mb-4">{currentDate} - {scripture}</p>
+        </div> */}
+        <div className="bg-[url(https://plus.unsplash.com/premium_photo-1668624618388-f5ced9f651c7?q=80&w=2099&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)]  relative h-[500px] bg-no-repeat bg-cover py-10 flex items-center justify-center">
+            <div>
+                <h1 className="text-4xl text-left font-bold text-primary-500 mb-6">意象----</h1>
+                <h3 className="text-2xl text-center font-bold text-primary-500 mb-20">一群蒙恩的人，在教會裡時常經歷神的恩典與大能，榮耀主的名。</h3>
+                <h2 className="text-4xl text-left font-bold text-primary-500 mb-6">目標----</h2>
+                <h3 className="text-2xl text-center font-bold text-primary-500 mb-20">建立以基督為標竿的教會，以敬拜、團契、成長、事奉、宣教為教會的五大目標。</h3>
+            </div>
         </div>
-        <div className="bg-primary 500">
+        <div>
             <div className="container mx-auto py-15">
                 <div className="grid grid-cols-4 gap-4">
                     <Link className="bg-white text-center align-middle py-20 rounded-2xl shadow-lg">
@@ -127,15 +139,15 @@ function Home() {
                         <p className="text-2xl text-primary-400 mb-4">本週週報</p>
                     </Link>
                     <Link className="bg-white text-center align-middle py-20 rounded-2xl shadow-lg">
-                        <span className="material-symbols-outlined text-6xl text-primary-500">description</span>
+                        <FontAwesomeIcon icon={faNewspaper} className="text-primary-500 mb-4" size="6x" />
                         <p className="text-2xl text-primary-400 mb-4">本週禱告信</p>
                     </Link>
                     <Link className="bg-white text-center align-middle py-20 rounded-2xl shadow-lg">
-                        <span className="material-symbols-outlined text-6xl text-primary-500">description</span>
+                        <FontAwesomeIcon icon={faNewspaper} className="text-primary-500 mb-4" size="6x" />
                         <p className="text-2xl text-primary-400 mb-4">本季服事</p>
                     </Link>
                     <Link className="bg-white text-center align-middle py-20 rounded-2xl shadow-lg">
-                        <span className="material-symbols-outlined text-6xl text-primary-500">description</span>
+                        <FontAwesomeIcon icon={faNewspaper} className="text-primary-500 mb-4" size="6x" />
                         <p className="text-2xl text-primary-400 mb-4">線上奉獻表單</p>
                     </Link>
                 </div>

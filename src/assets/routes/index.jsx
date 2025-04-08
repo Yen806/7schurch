@@ -2,7 +2,6 @@ import App from '../../App';
 import Home from '../pages/Home'
 import Intro from '../pages/Intro/Intro';
 import ChurchHistory from '../pages/Intro/ChurchHistory';
-import ChurchGoal from '../pages/Intro/ChurchGoal';
 import ChurchMark from '../pages/Intro/ChurchMark';
 
 const routes = [
@@ -21,10 +20,6 @@ const routes = [
             {
                 path: '教會歷史',
                 element: <ChurchHistory />,
-            },
-            {
-                path: '教會目標',
-                element: <ChurchGoal />,
             },
             {
                 path: '教會標誌',
