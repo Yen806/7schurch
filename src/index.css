@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-100: #FFFF99;
+  --color-primary-200: #FCBA63;
+  --color-primary-300: #D96600;
+  --color-primary-400: #B93421;
+  --color-primary-500: #4D0000;
+  --color-light-100: #fff7df;
+  --font-display: "Montserrat", sans-serif --font-traditional: "LXGW WenKai Mono TC", monospace;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--color-primary-400);
+  margin-right: 16px;
+  margin-left: 16px;
+}
+
+.frontpage {
+  .swiper {
+    height: 500px;
+  }
+
+  .swiper-slide {
+    height: 480px;
+  }
+}
