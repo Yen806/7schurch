@@ -34,7 +34,7 @@ function IntroHome() {
                                 <li className="mb-4">我們相信教會是基督的身體，以基督為元首，由一切重生得救的人組成彼此相愛，合而為一，負有傳揚福音造就聖徒的使命。</li>
                             </ul>
                             {!isExtend && (
-                                <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-primary-200 to-transparent pointer-events-none" />
+                                <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-light-100 to-transparent pointer-events-none" />
                             )}
                         </div>
                         <button type="button" className="mx-auto text-2xl w-full my-4 text-primary-500" onClick={textExtend}>{isExtend ? 'Read Less' : 'Read More'}<span className="ms-4s material-symbols-outlined align-middle">{isExtend ? "keyboard_arrow_up" : "keyboard_arrow_down"}</span></button>

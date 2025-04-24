@@ -7,7 +7,7 @@
   --color-primary-400: #B93421;
   --color-primary-500: #4D0000;
   --color-light-100: #fff7df;
-  --font-display: "Montserrat", sans-serif --font-traditional: "LXGW WenKai Mono TC", monospace;
+  --font-display: "Montserrat", "sans-serif";
 }
 
 .swiper-button-next,
