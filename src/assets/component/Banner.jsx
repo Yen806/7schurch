@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -8,6 +11,13 @@ import 'swiper/css/pagination'
 
 
 function Banner() {
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+        })
+        AOS.refresh()
+    }, [])
     return (<>
         <div className="relative hidden md:block">
             <Swiper
@@ -19,21 +29,27 @@ function Banner() {
                     delay: 5000,
                 }}>
                 <SwiperSlide className="relative">
-                    <img src="images/church-6.jpg" alt="Slide 1" className="w-full h-screen object-cover" />
-                    <div className="absolute top-[30%] left-[10%] w-full">
+                    <img src="images/church-06.jpg" alt="Slide 1" className="w-full h-screen object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/0 to-transparent pointer-events-none z-10" />
+                    <div className="absolute top-[30%] left-[10%] w-full z-100">
                         <h1 className="text-6xl text-primary-100 font-bold font-display mb-10">歡迎來到七賢路禮拜堂</h1>
-                        <div>
-                            <h1 className="text-4xl text-left font-bold  text-primary-100 mb-6 ml-10">意象----</h1>
-                            <h3 className="text-2xl text-center font-bold  text-primary-100 mb-10">一群蒙恩的人，在教會裡時常經歷神的恩典與大能，榮耀主的名。</h3>
-                            <h2 className="text-4xl text-left font-bold  text-primary-100 mb-6 ml-10">目標----</h2>
-                            <h3 className="text-2xl text-center font-bold  text-primary-100 mb-10">建立以基督為標竿的教會，以敬拜、團契、成長、事奉、宣教為教會的五大目標。</h3>
+                        <div className="w-2/3 mx-auto">
+                            <div data-aos="fade-down">
+                                <h1 className="text-4xl text-left font-bold  text-primary-100 mb-6 ml-10">異象----</h1>
+                                <h3 className="text-2xl text-center font-bold  text-primary-100 mb-10">一群蒙恩的人，在教會裡時常經歷神的恩典與大能，榮耀主的名。</h3>
+                            </div>
+                            <div data-aos="fade-down" data-aos-delay="1000">
+                                <h2 className="text-4xl text-left font-bold  text-primary-100 mb-6 ml-10">目標----</h2>
+                                <h3 className="text-2xl text-center font-bold  text-primary-100 mb-10">建立以基督為標竿的教會，以敬拜、團契、成長、事奉、宣教為教會的五大目標。</h3>
+                            </div>
                         </div>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide className="relative">
-                    <img src="images/news-01.png" alt="Slide2" className="w-full h-screen object-cover" />
-                    <div className="absolute top-[50%] left-[10%]">
-                        <h2 className="text-6xl text-primary-100 mb-2 font-bold">我們要的是什麼?</h2>
+                    <img src="images/news-01.png" alt="Slide2" className="w-full h-screen object-cover z-0" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/0 to-transparent pointer-events-none z-10" />
+                    <div className="absolute top-[50%] left-[10%] z-100">
+                        <h2 className="text-6xl text-primary-100 mb-4 font-bold">我們要的是什麼?</h2>
                         <h2 className="text-4xl text-primary-100 mb-4 font-bold">社青牧區4月聯合聚會</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-3xl mr-2">schedule</span>
@@ -47,8 +63,9 @@ function Banner() {
                 </SwiperSlide>
                 <SwiperSlide className="relative">
                     <img src="https://images.unsplash.com/photo-1431263154979-0982327fccbb?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slide 1" className="w-full h-screen object-cover" />
-                    <div className="absolute top-[50%] left-[10%]">
-                        <h2 className="text-6xl text-primary-100 mb-2 font-bold">屬神的人打美好的仗</h2>
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/0 to-transparent pointer-events-none z-10" />
+                    <div className="absolute top-[50%] left-[10%] z-100">
+                        <h2 className="text-6xl text-primary-100 mb-4 font-bold">屬神的人打美好的仗</h2>
                         <h2 className="text-4xl text-primary-100 mb-4 font-bold">姐妹會</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-3xl mr-2">schedule</span>
@@ -66,8 +83,9 @@ function Banner() {
                 </SwiperSlide>
                 <SwiperSlide className="relative">
                     <img src="https://images.unsplash.com/photo-1616548321627-3c1d17305545?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slide 1" className="w-full h-screen object-cover" />
-                    <div className="absolute top-[50%] left-[10%]">
-                        <h2 className="text-6xl text-primary-100 mb-2 font-bold text-shadow-lg">耶穌基督受難日禱告會</h2>
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/0 to-transparent pointer-events-none z-10" />
+                    <div className="absolute top-[50%] left-[10%] z-100">
+                        <h2 className="text-6xl text-primary-100 mb-4 font-bold text-shadow-lg">耶穌基督受難日禱告會</h2>
                         <h2 className="text-4xl text-primary-100 mb-4 font-bold">默想主耶穌背負十字架走苦路的經過</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-3xl mr-2">schedule</span>
@@ -81,8 +99,9 @@ function Banner() {
                 </SwiperSlide>
                 <SwiperSlide className="relative">
                     <img src="https://images.unsplash.com/photo-1504122398460-c635d6377010?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slide 1" className="w-full h-screen object-cover" />
-                    <div className="absolute top-[50%] left-[10%]">
-                        <h2 className="text-6xl text-primary-100 mb-2 font-bold">生命因愛而動聽</h2>
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/0 to-transparent pointer-events-none z-10" />
+                    <div className="absolute top-[50%] left-[10%] z-100">
+                        <h2 className="text-6xl text-primary-100 mb-4 font-bold">生命因愛而動聽</h2>
                         <h2 className="text-4xl text-primary-100 mb-4 font-bold">特兒家庭歡聚日</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-3xl mr-2">schedule</span>
@@ -102,21 +121,19 @@ function Banner() {
         </div>
         <div className="relative md:hidden">
             <Swiper
-                modules={[Pagination]}
+                modules={[Pagination, Autoplay]}
                 loop={true}
-                pagination={{
-                    type: 'fraction',
-                    renderFraction: function (currentClass, totalClass) {
-                        return `<span className="${currentClass}"></span> / <span className="${totalClass}"></span>`;
-                    },
+                autoplay={{
+                    delay: 5000,
                 }}
+                pagination
             >
                 <SwiperSlide className="relative">
-                    <img src="images/church-6.jpg" alt="Slide2" className="w-full h-screen object-cover" />
+                    <img src="images/church-06.jpg" alt="Slide2" className="w-full h-screen object-cover" />
                     <div className="absolute top-[20%] left-[10%] pr-4">
                         <h1 className="text-4xl text-primary-100 font-bold font-display mb-6">歡迎來到七賢路禮拜堂</h1>
-                        <div className="w-2/3 mx-auto">
-                            <h1 className="text-xl text-left font-bold  text-primary-100 mb-3 ml-10">意象----</h1>
+                        <div>
+                            <h1 className="text-xl text-left font-bold  text-primary-100 mb-3 ml-10">異象----</h1>
                             <h3 className="text-lg text-center font-bold  text-primary-100 mb-6">一群蒙恩的人，在教會裡時常經歷神的恩典與大能，榮耀主的名。</h3>
                             <h2 className="text-xl text-left font-bold  text-primary-100 mb-3 ml-10">目標----</h2>
                             <h3 className="text-lg text-center font-bold  text-primary-100 mb-6">建立以基督為標竿的教會，以敬拜、團契、成長、事奉、宣教為教會的五大目標。</h3>
@@ -126,7 +143,7 @@ function Banner() {
                 <SwiperSlide className="relative">
                     <img src="images/news-01.png" alt="Slide2" className="w-full h-screen object-cover" />
                     <div className="absolute top-[30%] left-[10%] pr-4 z-100">
-                        <h2 className="text-4xl text-primary-100 mb-2 font-bold">我們要的是什麼?</h2>
+                        <h2 className="text-4xl text-primary-100 mb-4 font-bold">我們要的是什麼?</h2>
                         <h2 className="text-2xl text-primary-100 mb-4 font-bold">社青牧區4月聯合聚會</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-3xl mr-2">schedule</span>
@@ -141,7 +158,7 @@ function Banner() {
                 <SwiperSlide className="relative">
                     <img src="https://images.unsplash.com/photo-1431263154979-0982327fccbb?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slide 3" className="w-full h-screen object-cover" />
                     <div className="absolute top-[30%] left-[10%] pr-4">
-                        <h2 className="text-4xl text-primary-100 mb-2 font-bold">屬神的人打美好的仗</h2>
+                        <h2 className="text-4xl text-primary-100 mb-4 font-bold">屬神的人打美好的仗</h2>
                         <h2 className="text-2xl text-primary-100 mb-4 font-bold">姐妹會</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-xl mr-2">schedule</span>
@@ -160,7 +177,7 @@ function Banner() {
                 <SwiperSlide className="relative">
                     <img src="https://images.unsplash.com/photo-1616548321627-3c1d17305545?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slide 4" className="w-full h-screen object-cover" />
                     <div className="absolute top-[30%] left-[10%] pr-4">
-                        <h2 className="text-4xl text-primary-100 mb-2 font-bold text-shadow-lg">耶穌基督受難日禱告會</h2>
+                        <h2 className="text-4xl text-primary-100 mb-4 font-bold text-shadow-lg">耶穌基督受難日禱告會</h2>
                         <h2 className="text-2xl text-primary-100 mb-4 font-bold">默想主耶穌背負十字架走苦路的經過</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-xl mr-2">schedule</span>
@@ -175,7 +192,7 @@ function Banner() {
                 <SwiperSlide className="relative">
                     <img src="https://images.unsplash.com/photo-1504122398460-c635d6377010?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slide 5" className="w-full h-screen object-cover" />
                     <div className="absolute top-[30%] left-[10%] pr-4">
-                        <h2 className="text-4xl text-primary-100 mb-2 font-bold">生命因愛而動聽</h2>
+                        <h2 className="text-4xl text-primary-100 mb-4 font-bold">生命因愛而動聽</h2>
                         <h2 className="text-2xl text-primary-100 mb-4 font-bold">特兒家庭歡聚日</h2>
                         <div className="flex mb-2 items-center">
                             <span className="material-symbols-outlined text-primary-100 text-xl mr-2">schedule</span>

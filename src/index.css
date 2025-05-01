@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
 @theme {
+  --color-primary-50: #FFE4C4;
   --color-primary-100: #FFFF99;
   --color-primary-200: #FCBA63;
   --color-primary-300: #D96600;
   --color-primary-400: #B93421;
   --color-primary-500: #4D0000;
   --color-light-100: #fff7df;
-  --font-display: "Montserrat", "sans-serif";
+  --color-secondary-50: #E6EFE6;
+  --color-secondary-100: #c7eac7;
+  --color-secondary-400: #2F4F4F;
+  --font-sans: "Montserrat", "sans-serif";
 }
 
 .swiper-button-next,

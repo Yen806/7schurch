@@ -1,12 +1,11 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faNewspaper } from "@fortawesome/free-regular-svg-icons";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from "swiper/modules";
 import Banner from "../component/Banner";
 import axios from "axios";
 import VideoModal from "../component/VideoModal";
+import SeemoreButton from "../component/SeemoreButton";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -15,6 +14,8 @@ const API_URL = 'https://www.googleapis.com/youtube/v3/';
 const API_KEY = "AIzaSyDUWKehi9RMnKyvNdlVALztOoQOMS-289k";
 const CHANNEL_ID = "UCgXS9R3SHJZClOJlR-0-ahw";
 const CHURCH_CHANNEL_ID = "UCMVpHVsxxSChRJugilyIo-g"
+const baseUrl = import.meta.env.VITE_BASE_URL;
+const apiKey = import.meta.env.VITE_API_KEY;
 
 function Home() {
     const [currentDate, setCurrentDate] = useState('');
@@ -22,6 +23,8 @@ function Home() {
     const [lastManaVideo, setLastManaVideo] = useState('')
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
     const [liveVideoId, setLiveVideoId] = useState('')
+    const [activities, setActivities] = useState([])
+    const [articles, setArticles] = useState([])
 
     const dailyScriptures = [
         { date: "04/06", scripture: "羅馬書 8章1節" },
@@ -136,90 +139,85 @@ function Home() {
         const todayScripture = dailyScriptures.find(item => item.date === formattedDate);
         setScripture(todayScripture ? todayScripture.scripture : "今日經文尚未設定")
     }, [])
-
+    // 取得活動
+    const getAtivitiesList = async () => {
+        try {
+            const res = await axios.get(`${baseUrl}/rest/v1/activities?limit=5&order=created_at.desc`, {
+                headers: {
+                    apikey: apiKey,
+                    Authorization: `Bearer ${apiKey}`
+                }
+            })
+            setActivities(res.data)
+        } catch (error) {
+            alert('錯誤:', error.response);
+        }
+    }
+    //取得文章
+    const getArticlesList = async () => {
+        try {
+            const res = await axios.get(`${baseUrl}/rest/v1/articles?limit=1&order=created_at.desc`, {
+                headers: {
+                    apikey: apiKey,
+                    Authorization: `Bearer ${apiKey}`
+                }
+            })
+            setArticles(res.data)
+        } catch (error) {
+            alert('錯誤:', error.response);
+        }
+    }
+    useEffect(() => {
+        getAtivitiesList()
+        getArticlesList()
+    }, [])
     return (<>
         <Banner />
+        {/* 最新活動、文章 */}
         <div className="container mx-auto py-15">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-3 md:px-0">
-                <div className="relative bg-[url(https://images.unsplash.com/photo-1586486942853-511cfe2c6313?q=80&w=1024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] rounded-xl bg-center bg-no-repeat bg-cover">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 h-1/2 mt-auto rounded-b-xl z-0"></div>
-                    <div className="flex flex-col justify-end p-6 mt-auto h-full pb-10">
-                        <h3 className="text-lg md:text-xl text-white font-bold py-2 text-center block bg-primary-300 rounded-xl w-1/3 md:w-1/4 mb-10 z-10">最新文章</h3>
-                        <div className="z-10">
-                            <h3 className="text-2xl md:text-4xl text-white font-bold mb-3">如何預備過復活節（四）</h3>
-                            <p className="text-white line-clamp-2 pl-3">復活節之前是「受難節」，紀念耶穌基督在二千年前為我們眾人在十字架上受難的日子。因為耶穌為我們的罪在十字架上捨身流血，使我們的罪能夠因為相信耶穌而被上帝赦免，使我們因此能在上帝面前成為一位無罪的人，能與上帝和好，能蒙受上帝的祝福。
-                            </p>
-                        </div>
-                        <div className="mt-4 w-full text-end z-10">
-                            <Link>
-                                <button type='button' className="bg-primary-200 rounded-xl text-primary-500 hover:bg-primary-300 hover:text-primary-100">
-                                    <p className="py-2 px-4 me-2">看更多<span className="material-symbols-outlined align-bottom ml-2">arrow_right_alt</span></p>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                {articles.map((article) => {
+                    return (
+                        <div className="relative rounded-xl bg-center bg-no-repeat bg-cover" style={{ backgroundImage: `url(${article.image})` }} key={article.id}>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 h-1/2 mt-auto rounded-b-xl z-0"></div>
+                            <div className="flex flex-col justify-end p-6 mt-auto h-full pb-10">
+                                <h3 className="text-lg md:text-xl text-white font-bold py-2 text-center block bg-primary-300 rounded-xl w-1/3 md:w-1/4 mb-10 z-10">最新文章</h3>
+                                <div className="z-10">
+                                    <h3 className="text-2xl md:text-4xl text-white font-bold mb-3">{article.title}</h3>
+                                    <p className="text-white line-clamp-2 pl-3">{article.description1}{articles.description2}
+                                    </p>
+                                </div>
+                                <div className="mt-4 w-full text-end z-10">
+                                    <Link to={'最新文章'}>
+                                        <SeemoreButton />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>)
+                })}
+
                 <div>
                     <div>
                         <h3 className="text-lg md:text-xl text-primary-500 font-bold py-2 text-center block bg-primary-200 rounded-xl w-1/3 md:w-1/4">最新消息</h3>
                     </div>
                     <ul className="list-disc px-4 marker:text-primary-200">
-                        <li className="py-4 border-b-1 border-primary-200">
-                            <Link>
-                                <div className="flex items-center mb-2">
-                                    <h3 className="text-md md:text-lg text-gray-800 font-bold hover:underline hover:text-primary-400">第51期中保代禱</h3>
-                                    <time dateTime="2025-04-03" className="text-sm text-gray-400 ml-auto">2025-04-03</time>
-                                </div>
-                                <p className="text-sm md:text-base truncate text-gray-500">第51期中保代禱期間為4/1-6/30，請中保代禱同工至辦公室登記輪值時段，願受訓弟兄姊妹請洽瑤琴傳道。今日崇拜後舉行中保同工宣誓，弟兄姊妹有需要，請填中保代禱卡，投入代禱箱。
-                                </p>
-                            </Link>
-                        </li>
-                        <li className="py-4 border-b-1 border-primary-200">
-                            <Link>
-                                <div className="flex items-center mb-2">
-                                    <h3 className="text-md md:text-lg text-gray-800 font-bold hover:underline hover:text-primary-400">2025第二季宣教日引</h3>
-                                    <time dateTime="2025-04-03" className="text-sm text-gray-400 ml-auto">2025-04-02</time>
-                                </div>
-                                <p className="text-sm md:text-base truncate text-gray-500 ">內容精彩: 認識日本文化，朝鮮實況，佛教的輪迴和印尼蘇門答臘，拓寬我們的屬靈視野，以禱告貼近上帝憐憫的心腸，歡迎免費索取。
-                                </p>
-                            </Link>
-                        </li>
-                        <li className="py-4 border-b-1 border-primary-200">
-                            <Link>
-                                <div className="flex items-center mb-2">
-                                    <h3 className="text-md md:text-lg text-gray-800 font-bold hover:underline hover:text-primary-400">【我們要的是什麼】</h3>
-                                    <time dateTime="2025-04-03" className="text-sm text-gray-400 ml-auto">2025-04-02</time>
-                                </div>
-                                <p className="text-sm md:text-base truncate text-gray-500 ">4/12(六)晚上7：30社青牧區聯合聚會【我們要的是什麼】，邀請社青弟兄姊妹參加。
-                                </p>
-                            </Link>
-                        </li>
-                        <li className="py-4 border-b-1 border-primary-200">
-                            <Link>
-                                <div className="flex items-center mb-2">
-                                    <h3 className="text-md md:text-lg text-gray-800 font-bold hover:underline hover:text-primary-400">兒主復活節系列聚會</h3>
-                                    <time dateTime="2025-04-03" className="text-sm text-gray-400 ml-auto">2025-04-01</time>
-                                </div>
-                                <p className="text-sm md:text-base truncate text-gray-500 ">4/13、4/20 (日)上午9：30兒主復活節系列聚會，歡迎邀請兒童VIP參加，一起認識復活節的意義；並請先完成網路報名。
-                                </p>
-                            </Link>
-                        </li>
-                        <li className="py-4 border-b-1 border-primary-200">
-                            <Link>
-                                <div className="flex items-center mb-2">
-                                    <h3 className="text-md md:text-lg text-gray-800 font-bold hover:underline hover:text-primary-400">屬神的人打美好的仗</h3>
-                                    <time dateTime="2025-04-03" className="text-sm text-gray-400 ml-auto">2025-04-01</time>
-                                </div>
-                                <p className="text-sm md:text-base truncate text-gray-500 ">4/18（五）上午10：00姊妹會，講員：杜鴻模長老，題目：屬神的人打美好的仗。上午9：30有詩歌歡唱，歡迎全教會各年齡層一起來參加。
-                                </p>
-                            </Link>
-                        </li>
+                        {activities.map((activity) => {
+                            return (
+                                <li className="py-4 border-b-1 border-primary-200" key={activity.id}>
+                                    <Link to={`近期消息/${activity.id}`}>
+                                        <div className="flex items-center mb-2">
+                                            <h3 className="text-lg md:text-xl text-gray-800 font-bold hover:underline hover:text-primary-400">{activity.title}</h3>
+                                            <time dateTime="2025-04-03" className="text-sm text-gray-400 ml-auto">{new Date(activity.created_at).toLocaleDateString()}</time>
+                                        </div>
+                                        <p className="text-sm md:text-base truncate text-gray-500">{activity.content}{activity.description}
+                                        </p>
+                                    </Link>
+                                </li>)
+                        })}
                     </ul>
                     <div className="mt-4 w-full text-end">
-                        <Link>
-                            <button type='button' className="bg-primary-200 rounded-xl text-primary-500 hover:bg-primary-300 hover:text-primary-100">
-                                <p className="py-2 px-4 me-2">看更多<span className="material-symbols-outlined align-bottom ml-2">arrow_right_alt</span></p>
-                            </button>
+                        <Link to={'近期消息'}>
+                            <SeemoreButton />
                         </Link>
                     </div>
                 </div>
@@ -232,7 +230,7 @@ function Home() {
                     <h2 className="text-xl md:text-3xl text-primary-500 pr-6">WORSHIP</h2>
                     <h2 className="border-l-4 border-primary-500 text-xl md:text-4xl text-primary-500 pl-6">崇拜時間</h2>
                 </div>
-                <div className="mb-10">
+                <div className="mb-10 px-4">
                     <Swiper
                         modules={[Navigation]}
                         navigation
@@ -245,9 +243,9 @@ function Home() {
                         }}
                     >
                         <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                            <img src="images/da-jin.jpg" alt="" className="rounded-t-2xl h-[250px] w-full object-cover" />
+                            <img src="images/da-jin.jpg" alt="" className="rounded-t-2xl h-[180px] md:h-[250px] w-full object-cover" />
                             <div className="p-6">
-                                <h3 className="text-2xl font-bold mb-3 text-primary-500">4/6舊寮崇拜</h3>
+                                <h3 className="text-xl md:text-2xl font-bold mb-3 text-primary-500">4/6舊寮崇拜</h3>
                                 <div>
                                     <p>時間：(日)9:30-11:00</p>
                                     <p>地點：舊寮教會</p>
@@ -256,9 +254,9 @@ function Home() {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                            <img src="images/church-02.jpg" alt="" className="rounded-t-2xl h-[250px] w-full object-cover" />
+                            <img src="images/church-02.jpg" alt="" className="rounded-t-2xl h-[180px] md:h-[250px] w-full object-cover" />
                             <div className="p-6">
-                                <h3 className="text-2xl font-bold mb-3 text-primary-500">4/13主日崇拜</h3>
+                                <h3 className="text-xl md:text-2xl font-bold mb-3 text-primary-500">4/13主日崇拜</h3>
                                 <div>
                                     <p>時間：(日)9:30-11:00</p>
                                     <p>地點：三樓大堂</p>
@@ -269,9 +267,9 @@ function Home() {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                            <img src="images/church-09.jpg" alt="" className="rounded-t-2xl h-[250px] w-full object-cover" />
+                            <img src="images/church-09.jpg" alt="" className="rounded-t-2xl h-[180px] md:h-[250px] w-full object-cover" />
                             <div className="p-6">
-                                <h3 className="text-2xl font-bold mb-3 text-primary-500">4/13台語崇拜</h3>
+                                <h3 className="text-xl md:text-2xl font-bold mb-3 text-primary-500">4/13台語崇拜</h3>
                                 <div>
                                     <p>時間：(日)9:30-11:00</p>
                                     <p>地點：台語堂</p>
@@ -280,9 +278,9 @@ function Home() {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                            <img src="https://plus.unsplash.com/premium_photo-1661377118520-287ec60a32f3?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="rounded-t-2xl h-[250px] w-full object-cover" />
+                            <img src="https://plus.unsplash.com/premium_photo-1661377118520-287ec60a32f3?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="rounded-t-2xl h-[180px] md:h-[250px] w-full object-cover" />
                             <div className="p-6">
-                                <h3 className="text-2xl font-bold mb-3 text-primary-500">4/5學青崇拜</h3>
+                                <h3 className="text-xl md:text-2xl font-bold mb-3 text-primary-500">4/5學青崇拜</h3>
                                 <div>
                                     <p>時間：(六)16:00-17:00</p>
                                     <p>地點：六樓學青教室</p>
@@ -292,9 +290,9 @@ function Home() {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="bg-white rounded-2xl shadow-lg">
-                            <img src="images/church-07.jpg" alt="" className="rounded-t-2xl h-[250px] w-full object-cover" />
+                            <img src="images/church-07.jpg" alt="" className="rounded-t-2xl h-[180px] md:h-[250px] w-full object-cover" />
                             <div className="p-6">
-                                <h3 className="text-2xl font-bold mb-3 text-primary-500">4月兒童主日學</h3>
+                                <h3 className="text-xl md:text-2xl font-bold mb-3 text-primary-500">4月兒童主日學</h3>
                                 <div>
                                     <p>時間：(日)9:30-12:00</p>
                                     <p>地點：一樓副堂</p>
@@ -308,16 +306,16 @@ function Home() {
             </div>
         </main>
         {/* 靈修 */}
-        <div className="relative bg-[url(https://plus.unsplash.com/premium_photo-1668624618388-f5ced9f651c7?q=80&w=2099&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] h-[400px] bg-no-repeat bg-cover flex items-center justify-center">
+        <div className="relative bg-[url(https://plus.unsplash.com/premium_photo-1668624618388-f5ced9f651c7?q=80&w=2099&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] h-[300px] md:h-[400px] bg-no-repeat bg-cover flex items-center justify-center">
             <div className="absolute inset-0 bg-gradient-to-b from-[#FFF7DF]/100 to-[#FFF7DF]/10 z-0"></div>
             <div className="container mx-auto py-10 z-10">
-                <div className="flex items-center">
-                    <h2 className="text-4xl text-primary-500 font-bold mb-6 mr-4">本日靈修經文</h2>
-                    <p className="text-2xl text-primary-400 mb-4">{currentDate} - {scripture}</p>
+                <div className="flex flex-col md:flex-row items-center">
+                    <h2 className="text-3xl md:text-4xl text-primary-500 font-bold mb-6 mr-4">本日靈修經文</h2>
+                    <p className="text-xl md:text-2xl text-primary-400 mb-4">{currentDate} - {scripture}</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 mt-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 mt-4 mr-4">
                     <Link className="w-full text-center hover:bg-gradient-to-r hover:from-transparent hover:to-primary-300 rounded-2xl py-4 text-primary-400 hover:text-primary-100 cursor-pointer col-span-1 col-start-3 flex justify-center items-center mb-4" to="https://drive.google.com/file/d/1B2RH5thbPkO8KTM8ng2HU-9AsJuyw_bQ/view">
-                        <h4 className="text-2xl mr-4">靈修筆記</h4>
+                        <h4 className="text-xl md:text-2xl mr-2 md:mr-4">靈修筆記</h4>
                         <span className="material-symbols-outlined text-4xl">expand_circle_right</span>
                     </Link>
                     {/* <div className="w-full text-center hover:bg-gradient-to-r hover:from-transparent hover:to-primary-300 rounded-2xl py-4 text-primary-400 hover:text-primary-100 cursor-pointer col-span-1 col-start-3 flex justify-center items-center mb-4" onClick={handleOpenModal}>
@@ -353,24 +351,24 @@ function Home() {
                         </button>
                     </Link>
                 </div>
-                <div className="mt-20">
+                <div className="mt-3 md:mt-20">
                     <div>
                         <div className="grid grid-cols-2 gap-4 md:gap-6 pl-4 md:pl-0">
                             <Link className="bg-white text-center align-middle py-5 md:py-5 rounded-2xl shadow-lg" to="https://www.kc7schurch.org.tw/kc7_pdf/20250420.pdf">
                                 <img src="images/icon/weekly.png" alt="" className="w-16 h-16 mx-auto mb-3" />
-                                <p className="text-2xl text-primary-400 mb-4">本週週報</p>
+                                <p className="text-xl md:text-2xl text-primary-400 mb-4">本週週報</p>
                             </Link>
                             <Link className="bg-white text-center align-middle py-5 md:py-5 rounded-2xl shadow-lg">
                                 <img src="images/icon/letter.png" alt="" className="w-16 h-16 mx-auto mb-3" />
-                                <p className="text-2xl text-primary-400 mb-4">本週禱告信</p>
+                                <p className="text-xl md:text-2xl text-primary-400 mb-4">本週禱告信</p>
+                            </Link>
+                            <Link className="bg-white text-center align-middle py-5 md:py-5 rounded-2xl shadow-lg" to="https://www.beclass.com/rid=294db31674b4274a0321">
+                                <img src="images/icon/camp.png" alt="" className="w-16 h-16 mx-auto mb-3 object-contain" />
+                                <p className="text-xl md:text-2xl text-primary-400 mb-4">歡樂周末營報名</p>
                             </Link>
                             <Link className="bg-white text-center align-middle py-5 md:py-5 rounded-2xl shadow-lg">
-                                <FontAwesomeIcon icon={faNewspaper} className="text-primary-500 mb-4" size="4x" />
-                                <p className="text-2xl text-primary-400 mb-4">本季服事</p>
-                            </Link>
-                            <Link className="bg-white text-center align-middle py-5 md:py-5 rounded-2xl shadow-lg">
-                                <FontAwesomeIcon icon={faNewspaper} className="text-primary-500 mb-4" size="4x" />
-                                <p className="text-2xl text-primary-400 mb-4">線上奉獻表單</p>
+                                <img src="images/icon/serve.png" alt="" className="w-16 h-16 mx-auto mb-3" />
+                                <p className="text-xl md:text-2xl text-primary-400 mb-4">本季服事表</p>
                             </Link>
                         </div>
                     </div>
@@ -378,7 +376,29 @@ function Home() {
             </div>
 
         </section>
-        <img src="images/icon/church.png" alt="" className="ml-auto mr-6 w-[120px]" />
+        {/* 禱告會 */}
+        <section className="relative bg-[url(images/pray.jpg)] bg-no-repeat bg-cover bg-center">
+            <div className="absolute inset-0 bg-white/60 md:bg-gradient-to-t md:from-[#FFF7DF]/100 md:to-[#FFF7DF]/10 z-0"></div>
+            <div className="relative container mx-auto pt-15 mb-15 md:pb-30">
+                <div className="flex mx-auto justify-center mb-10">
+                    <h2 className="text-xl md:text-3xl text-primary-500 pr-6">PRAYER</h2>
+                    <h2 className="border-l-4 border-primary-500 text-xl md:text-4xl text-primary-500 pl-6">禱告會</h2>
+                </div>
+                <div className="w-full md:w-1/2 ml-auto mr-6 py-10 md:py-15">
+                    <h4 className="text-2xl text-primary-500 text-center md:text-right mb-6">每周三晚上19:30</h4>
+                    <div className="flex justify-center md:justify-end">
+                        <Link>
+                            <button type='button' className="flex items-center justify-center bg-primary-200 rounded-xl px-4 py-1 md:py-2 text-primary-500 hover:bg-primary-300 hover:text-primary-100 cursor-pointer text-sm md:text-base">
+                                <p className=" me-2 ">加入禱告會</p>
+                                <span className="material-symbols-outlined">arrow_right_alt</span>
+                            </button>
+                        </Link>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <img src="images/icon/church.png" alt="" className="ml-auto mr-6 w-[80px] md:w-[120px]" />
         {isVideoModalOpen && (
             <VideoModal
                 videoId={lastManaVideo}
