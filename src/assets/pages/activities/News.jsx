@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import axios from "axios";
+import supabase from "../../../supabase";
 import BannerImage from "../../component/BannerImage"
 import SeemoreButton from "../../component/SeemoreButton";
 import PaginationCom from "../../component/PaginationCom";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
-const apiKey = import.meta.env.VITE_API_KEY;
 
 function News() {
     const [activities, setActivities] = useState([])
@@ -21,17 +19,16 @@ function News() {
         { id: "mission", label: "宣教消息", icon: "fireplace" }]
 
     const getAtivitiesList = async () => {
-        try {
-            const res = await axios.get(`${baseUrl}/rest/v1/activities?order=created_at.desc`, {
-                headers: {
-                    apikey: apiKey,
-                    Authorization: `Bearer ${apiKey}`
-                }
-            })
-            setActivities(res.data)
-        } catch (error) {
-            alert('錯誤:', error.response);
+        const { data, error } = await supabase
+            .from("activities")
+            .select("*")
+            .order("created_at", { ascending: false });
+        if (error) {
+            alert("錯誤: " + error.message);
+            return;
         }
+
+        setActivities(data);
     }
     useEffect(() => {
         getAtivitiesList()

@@ -10,6 +10,8 @@ import ChurchOrganize from '../pages/Intro/ChurchOrganize';
 import ChurchSect from '../pages/Intro/ChurchSect';
 import HappyCamp from '../pages/activities/HappyCamp';
 import Notfound from '../pages/NotFound';
+import AdminLogin from '../admin/AdminLogin';
+import AdminLayout from '../admin/AdminLayout';
 
 const routes = [
     {
@@ -66,6 +68,14 @@ const routes = [
     {
         path: '*',
         element: <Notfound />,
+    },
+    {
+        path: 'adminLogin',
+        element: <AdminLogin />,
+    },
+    {
+        path: 'admin',
+        element: <AdminLayout />,
     },
 ]
 

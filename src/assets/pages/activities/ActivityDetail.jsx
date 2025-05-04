@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom"
 import BannerImage from "../../component/BannerImage"
 import axios from "axios";
-
-const baseUrl = import.meta.env.VITE_BASE_URL;
-const apiKey = import.meta.env.VITE_API_KEY;
+import supabase from "../../../supabase";
 
 function ActivityDetail() {
     const [activity, setActivity] = useState({})
@@ -12,32 +10,33 @@ function ActivityDetail() {
     const { id: acitvity_id } = useParams();
 
     const getAtivityDetail = async () => {
-        try {
-            const res = await axios.get(`${baseUrl}/rest/v1/activities?id=eq.${acitvity_id}&select=*`, {
-                headers: {
-                    apikey: apiKey,
-                    Authorization: `Bearer ${apiKey}`
-                }
-            })
-            setActivity(res.data[0])
-        } catch (error) {
-            alert('錯誤:', error.response);
+        const { data, error } = await supabase
+            .from("activities")
+            .select("*")
+            .eq("id", acitvity_id)
+            .single();
+
+        if (error) {
+            alert("錯誤: " + error.message);
+            return;
         }
+
+        setActivity(data);
     }
 
     const getAtivitiesList = async () => {
-        try {
-            const res = await axios.get(`${baseUrl}/rest/v1/activities?limit=5&order=created_at.desc`, {
-                headers: {
-                    apikey: apiKey,
-                    Authorization: `Bearer ${apiKey}`
-                }
-            })
-            console.log(res.data)
-            setActivities(res.data)
-        } catch (error) {
-            alert('錯誤:', error.response);
+        const { data, error } = await supabase
+            .from("activities")
+            .select("*")
+            .order("created_at", { ascending: false })
+            .limit(5);
+
+        if (error) {
+            alert("錯誤: " + error.message);
+            return;
         }
+
+        setActivities(data);
     }
     useEffect(() => {
         getAtivityDetail()
@@ -80,8 +79,8 @@ function ActivityDetail() {
                                 <li key={item.id}>
                                     <Link to={`/活動/${item.id}`} className="py-2 ">
                                         <button type="button" className="w-full text-left text-primary-400  text-xl mb-4 truncate cursor-pointer pr-4">
-                                        <span className="material-symbols-outlined mr-2 align-middle ml-4">radio_button_unchecked</span>
-                                            {item.title ||item.sub_title  }</button>
+                                            <span className="material-symbols-outlined mr-2 align-middle ml-4">radio_button_unchecked</span>
+                                            {item.title || item.sub_title}</button>
                                     </Link>
                                 </li>)
                         })}
